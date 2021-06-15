@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Container } from '@material-ui/core';
+import QrReader from 'react-qr-reader';
 
 function App() {
+  const [scannedItem, setScannedItem] = useState('');
+
+  const handleScan = (data) => {
+    if (data) {
+      setScannedItem(data);
+      console.log(data);
+    }
+  }
+
+  const handleError = (error) => {
+    console.log(error);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <h3>Scan a QR code using your Webcam</h3>
+      <QrReader 
+        delay={300}
+        onScan={handleScan}
+        onError={handleError}
+        style={{ width: '100%' }}
+        />
+      <h3>Scanned Code: {scannedItem}</h3>
+    </Container>
   );
 }
 
